@@ -207,15 +207,14 @@ void Population:: move(){
     }
 
     //faccio mutazioni con probabilità prob_mutation
-    double a=rnd.Rannyu();
     for(int i =0; i<10; i++){
-        if(a< prob_mutation1) mutation1();
+        if(rnd.Rannyu()< prob_mutation1) mutation1();
 
-        if(a< prob_mutation2) mutation2();
+        if(rnd.Rannyu()< prob_mutation2) mutation2();
 
-        if(a< prob_mutation3) mutation3();
+        if(rnd.Rannyu()< prob_mutation3) mutation3();
 
-        if(a< prob_mutation4) mutation4();
+        if(rnd.Rannyu()< prob_mutation4) mutation4();
     }
 
     //ordino la popolazione nuova

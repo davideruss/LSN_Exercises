@@ -59,21 +59,21 @@ void Population :: initialize(){
         }
     }
 //------------------------ metodo 1:Isole eterogenee ------------------------
-// qua semplicemente cambio la probabilità di mutazione in alcune isole
-// if(rank%3==0){
-//     prob_mutation1 *= 1.5;
-//     prob_mutation2 *= 1.5;
-//     prob_mutation3 *= 1.5;
-//     prob_mutation4 *= 1.5;
-//     val_selection= 1.7;
+    // qua semplicemente cambio la probabilità di mutazione in alcune isole
+    // if(rank%3==0){
+    //     prob_mutation1 *= 1.5;
+    //     prob_mutation2 *= 1.5;
+    //     prob_mutation3 *= 1.5;
+    //     prob_mutation4 *= 1.5;
+    //     val_selection= 1.7;
 
-// } else if(rank%3 ==1){
-//     prob_mutation1 *= 2;
-//     prob_mutation2 *= 2;
-//     prob_mutation3 *= 2;
-//     prob_mutation4 *= 2;
-//     val_selection=1.6;
-// }
+    // } else if(rank%3 ==1){
+    //     prob_mutation1 *= 2;
+    //     prob_mutation2 *= 2;
+    //     prob_mutation3 *= 2;
+    //     prob_mutation4 *= 2;
+    //     val_selection=1.6;
+    // }
 
 
 //---------------------------------------------------------------------------------------
@@ -88,10 +88,10 @@ void Population :: initialize(){
         if(rank == i ){
             prob_mutation1 *= t;
             prob_mutation2 *= t;
-            // prob_mutation3 *= t;
-            // prob_mutation4 *= t;
+            prob_mutation3 *= t;
+            prob_mutation4 *= t;
 
-            // val_selection *= u;
+            val_selection *= u;
         }
         u*= 0.99;
         t*= 1.09;
@@ -196,12 +196,12 @@ void Population :: mutation2(){
 
 void Population :: mutation3(){
     int c = rnd.Rannyu(0, nist);
-    int n = rnd.Rannyu(0, ndim-1);
+    int n = rnd.Rannyu(1, ndim-1);
 
-    for(int i =0; i<ndim-1; i++){
-        pop_new[c].swap(i, (i+n)%(ndim-1));
-    }
-    pop_new[c].cost();
+    arma::ivec conf = pop_new[c].getconf();
+
+    std::rotate(conf.begin(), conf.end() - n, conf.end());
+    pop_new[c].changeconf(conf);
 
 }
 
@@ -242,7 +242,7 @@ void Population:: move(){
     }
 
     //faccio mutazioni con probabilità prob_mutation
-    for(int i =0; i<10; i++){
+    for(int i =0; i<ndim/3; i++){
         if(rnd.Rannyu()< prob_mutation1) mutation1();
 
         if(rnd.Rannyu()< prob_mutation2) mutation2();

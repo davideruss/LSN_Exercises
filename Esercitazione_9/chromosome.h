@@ -18,7 +18,7 @@ public: // Function declarations
     Chromosome(const Chromosome& a);
 
     void changeconf(const arma::ivec& chr) ; 
-    const arma::ivec getconf() const{return chr;}
+    const arma::ivec& getconf() const{return chr;}
     void cost(); 
     double get_cost() const;
     void swap(int , int );
